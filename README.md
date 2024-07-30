@@ -72,4 +72,25 @@ Now that we have the password let's use it to ssh onto the target:
 ```bash
 ssh -i id_rsa john@$ip
 ```
+And we're in! Cat user.txt in john's home directory.
 
+# Privilege Escalation
+Now, let's see what john can do:
+
+![sudo -l](https://github.com/user-attachments/assets/3086283e-c108-4795-b07d-4c8db86db830)
+
+This looks promising, let's look it up on gtfobins.github.io:
+
+![gtfo](https://github.com/user-attachments/assets/fe26013d-dd64-44f3-a2da-d70147dbbc12)
+
+Let's try this on the target. Since we can assign any file to be "LFILE" let's make it the /etc/shadow so that we can get the hash of root's password:
+
+![lfile](https://github.com/user-attachments/assets/c8f83217-3b0d-4df9-8856-cf1f20ba7cf6)
+
+Now, we just have to save the line for root as a file on our machine and crack it using john.
+![root](https://github.com/user-attachments/assets/c2e39c12-7b86-4bd2-b406-efde5288af16)
+And we have root's password! Now, just switch users to root and grab the root flag:
+```bash
+su root
+```
+I hope you enjoyed this room and learned some new techniques!
